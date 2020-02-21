@@ -1,26 +1,5 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# Creating a new folder structure every time a new experiment is started is a process that can easily be automated. This is a perfect Python automation problem to solve. This notebook will be used to create a new folder structure for a new experiment. 
-# 
-# The experiment top level folder will have the name:
-# 
-# \<date_created\> - \<descriptive_experiment_name_Mark_XX\>.
-# 
-# The children folders can be:
-# 1. data - Raw data files are kept and referenced from. Cleaned data files can be kept here as well.
-# 2. images - Images, schematics, photos relevant to the experiment go here. Sub folders are:
-#      * PNG
-#      * JPG
-#      * SVG
-#      * NEF
-#      
-# 3. notebook - This is where the JupyterLab notbook will go
-# 4. plots - Relevant plots from data munging are saved to this folder
-# 5. videos - this is where video data will go
-# 
-# What folders get generated, depends on selection from the folder tab of GUI.
-
 #%%
 
 
@@ -37,12 +16,8 @@ from tkinter import ttk
 from tkcalendar import Calendar, DateEntry
 from tkinter.filedialog import askdirectory
 from ttkwidgets.frames import Balloon
-# from ttkthemes import ThemedTk
 
-
-#define custom functions
-# def save_main_folder():
-#     return master_folder.get()
+# define custom functions
 
 def ask_main_folder():
     '''Function sets main folder path'''
@@ -246,9 +221,6 @@ CV_file_pressure_transducer = tk.IntVar()
 CV_file_exp_setup = tk.IntVar()
 CV_file_concat_video = tk.IntVar()
 
-
-
-
 # Initialization of Tkinter variables 
 master_folder.set(r''.join([os.environ['USERPROFILE'],r'\Documents\01 - Local Work\00 - Titan\experiments']))
 date_string.set(datetime.today().strftime('%Y-%m-%d'))
@@ -259,7 +231,7 @@ name_folder_custom_0.set('literature')
 name_folder_custom_1.set('misc')
 name_folder_custom_2.set('zzz_obsolete')
 
-# tool tip text
+# tool tip text. define text here and place later.
 tip_text_change_folder = 'Click to open file explorer box to select parent folder.'
 tip_text_create_structure = 'Click to create the experiment folder structure. Selected folders in the Folders tab will be created. Selected files in the Files tab will be created.'
 tip_text_exit = 'Click to exit GUI.'
@@ -297,9 +269,10 @@ nb.pack(expand=True, fill=tk.BOTH)
 
 #
 ########################################################################
-# Name Tab
+# Name Tab - user creates experiment kernal name
 ########################################################################
 #
+# Tab layout - create two frames, a top and bottom
 frame_parent_folder = ttk.Frame(tab_name)
 frame_parent_folder.place(relx=0, rely=0.0, relwidth=1.0, relheight=0.43)
 #
@@ -373,7 +346,7 @@ label_kernal2.grid(row=6, column=2, padx=5, pady=5, sticky='W', columnspan=100)
 #
 #
 ########################################################################
-# Folders Tab
+# Folders Tab - user selects folders to create
 ########################################################################
 #
 # Divide tab into two columns using frames
@@ -460,7 +433,7 @@ CF12.grid(row=3, column=0, sticky='E')
 entry_CV_custom2.grid(row=3, column=1, sticky='W')
 #
 ########################################################################
-# Files Tab
+# Files Tab - user selects additional files to add to structure
 ########################################################################
 #
 # Divide tab into thre columns using frames
@@ -480,18 +453,17 @@ frame_files_column_2.place(relx=0.666, rely=0.13, relwidth=0.333, relheight=1)
 label_tab_files_text = 'Select files you want created automaticaly.'
 label_tab_files = tk.Label(frame_files_title, text=label_tab_files_text)
  
-#
+# create and place column label
 label_tab_files_column_0_text = '*.txt note files'
 label_tab_files_column_0 = tk.Label(frame_files_column_0, text=label_tab_files_column_0_text)
   
-#
+# create and place column label
 label_tab_files_column_1_text = 'Data management files'
 label_tab_files_column_1 = tk.Label(frame_files_column_1, text=label_tab_files_column_1_text)
 
-#
+# create and place column label
 label_tab_files_column_2_text = 'Drawing files'
 label_tab_files_column_2 = tk.Label(frame_files_column_2, text=label_tab_files_column_2_text)
- 
 
 # create checkboxes
 C10 = tk.Checkbutton(frame_files_column_0, text = "_notes.txt", variable=CV_file_note)
@@ -527,20 +499,18 @@ C14.grid(row=3, column=0, sticky='W')
 C15.grid(row=4, column=0, sticky='W')
 C16.grid(row=1, column=0, sticky='W')
 C17.grid(row=2, column=0, sticky='W')
-
-
 #
 ########################################################################
-# Buttons
+# Buttons - provide user with two buttons: 1. create folders and 2. exit GUI
 ########################################################################
 #
-# create and place create button
+# Create and place create button.
 button_create_folders = ttk.Button(frame2, text='Create Structure', command=create_folders)
 button_create_folders.grid(row=100, column=0, sticky='W')
 # add tool tip for button
 Balloon(button_create_folders, headertext=tip_text_header, text=tip_text_create_structure, background=None, image=None)
 
-# create and place a quit button.
+# Create and place a quit button.
 button_quit = ttk.Button(frame2, text='Exit', command=root.destroy)
 button_quit.grid(row=101, column=0, sticky='W')
 # add tool tip for button
