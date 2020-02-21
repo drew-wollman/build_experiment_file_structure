@@ -21,7 +21,7 @@
 # 
 # What folders get generated, depends on selection from the folder tab of GUI.
 
-# In[ ]:
+#%%
 
 
 # import liberaries 
