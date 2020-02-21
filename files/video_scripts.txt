@@ -1,0 +1,28 @@
+# Helpful video scripts for ffmpeg
+These just jog my memory of how to do common tasks. all fields need to be editied.
+This file will be light on documentation.
+
+to review movie, use ffplay
+to convert movie, use ffmpeg
+examples are below
+
+# previewing a croped video
+ffplay -vf "rotate=0, crop=458:458:100:0, eq=contrast=1.4:brightness=0" input.wmv
+
+# converting a 13 min section of a video, adding time stamp and speeding it up 100x
+ffmpeg -y -ss 00:00:00 -t 00:13:00 -i input.wmv -vf "rotate=0, crop=460:460:98:0, eq=contrast=1.1:brightness=0,
+drawtext=fontfile=/Windows/Fonts/arial.ttf:fontsize=45:fontcolor=yellow:box=1:boxcolor=black:x=(W-tw)/2:y=H-th-10:
+text='Time\: %{pts\:hms}', setpts=0.01*PTS" output.mp4
+
+# blending frames
+ffmpeg -i concatenated.wmv -vf "lutyuv=y=val*2.0,tblend=average,framestep=2,tblend=average,framestep=2,tblend=average,framestep=2,tblend=average,framestep=2,tblend=average,framestep=2,tblend=average,framestep=2,setpts=0.015625*PTS" -r 60 blended64.mp4
+
+# Lable time on frame on timelapse videos recorded at 1 FPS.
+preview with ffplay
+ffplay -vf "drawtext=fontfile=/Windows/Fonts/arial.ttf:fontsize=45:fontcolor=yellow:box=1:boxcolor=black:alpha=0.5:x=10:h-th-10:y=H-th-10:text='Time (s)\: %{n}'" -i tank_leak_concatenated.wmv
+
+convert with ffmpeg
+ffmpeg -i tank_leak_concatenated.wmv -vf "drawtext=fontfile=/Windows/Fonts/arial.ttf:fontsize=50:fontcolor=0xFF8C00@'1.0':box=1:boxcolor=0xF0F8FF@'0.75':expansion:x=10:h-th-10:y=H-th-10:text='Time (s)\: %{n}'" tank_leak_time.mp4
+
+# make image sequence with 5 leeding zeros in image name.
+ffmpeg -y -i input.mp4 output_frame_%05d.png
